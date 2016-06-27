@@ -6,7 +6,15 @@ module.exports = function(grunt) {
 
 		wiredep: {
 			task: {
-				src: 'scr/html/*.html'
+				src: ['src/html/*.html'],
+				overrides: {
+					bootstrap: {
+						main: [
+							"dist/css/bootstrap.css",
+							"dist/js/bootstrap.js"
+						]
+					}
+				}
 			}
 		},
 

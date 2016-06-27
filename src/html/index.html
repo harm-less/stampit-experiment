@@ -2,21 +2,48 @@
 <head>
 
 	<!-- bower:css -->
+	<link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css" />
 	<!-- endbower -->
 
 </head>
 <body ng-controller="MainController">
+<div class="container">
 
-{{hello}}
+	<div class="row">
+		<div class="col-sm-4">
+			<button class="btn btn-primary" ng-click="addError()">Add error</button>
 
+			<ul class="list-unstyled">
+				<li ng-repeat="error in errors track by $index">
+					<div>Code: <strong>{{error.code}}</strong></div>
+					<div>Message: <strong>{{error.message}}</strong></div>
+				</li>
+			</ul>
+		</div>
+
+		<div class="col-sm-4">
+			<button class="btn btn-primary" ng-click="updateModelListeners()">Update model listeners</button>
+
+			<ul>
+				<li ng-repeat="log in logs track by $index">
+					{{log}}
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
 
 <!-- bower:js -->
 <script src="../../bower_components/jquery/dist/jquery.js"></script>
 <script src="../../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="../../bower_components/angular/angular.js"></script>
 <script src="../../bower_components/stampit/stampit.js"></script>
+<script src="../../bower_components/underscore/underscore.js"></script>
 <!-- endbower -->
 
 <script src="../js/app.js"></script>
+<script src="../js/models.js"></script>
+<script src="../js/errors.js"></script>
+<script src="../js/utils.js"></script>
 </body>
 </html>
