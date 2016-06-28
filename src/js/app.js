@@ -18,6 +18,7 @@ angular.module('stampit', ['models.core', 'utils', 'errors'])
 		});
 
 		modelInstance.registerUpdateListener('listener1', function() {
+			console.log($scope.logs.length);
 			$scope.logs.push('listener1');
 		});
 

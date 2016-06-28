@@ -15,7 +15,6 @@ angular.module('models.core', ['utils'])
 			};
 
 			this.addError = function (error) {
-				console.log(error.getCode());
 				errors.push(error);
 				return this;
 			};
@@ -44,19 +43,15 @@ angular.module('models.core', ['utils'])
 
 			var listeners = [];
 
-			var listerTimeOutHandler;
+			var listerTimeOutHandler = _.throttle(function () {
+				angular.forEach(listeners, function (listener) {
+					(listener.callback || angular.noop)();
+				});
+			}, 500);
 
 			this.update = function () {
 				if (listeners.length > 0) {
-					if (listerTimeOutHandler) {
-						$timeout.cancel(listerTimeOutHandler);
-					}
-
-					listerTimeOutHandler = $timeout(function () {
-						angular.forEach(listeners, function (listener) {
-							(listener.callback || angular.noop)();
-						});
-					}, 500);
+					listerTimeOutHandler();
 				}
 			};
 
@@ -67,15 +62,11 @@ angular.module('models.core', ['utils'])
 		});
 	})
 
-	.factory('CoreModelCollector', function (Class, vuCoreModelObserver, _) {
+	.factory('CoreModelCollector', function (stampit, _) {
 
-		return vuCoreModelObserver.extend(function() {
+		return stampit.init(function() {
 
 			var collection = [];
-
-			this.constructor = function () {
-				this.super();
-			};
 
 			this.add = function (item) {
 				collection.push(item);
